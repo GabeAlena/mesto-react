@@ -3,9 +3,9 @@ import { api } from '../utils/api.js';
 import Card from './Card';
 
 function Main(props) {
-    const [userName, setUserName] = React.useState();
-    const [userDescription, setUserDescription] = React.useState();
-    const [userAvatar, setUserAvatar] = React.useState();
+    const [userName, setUserName] = React.useState('');
+    const [userDescription, setUserDescription] = React.useState('');
+    const [userAvatar, setUserAvatar] = React.useState('');
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
@@ -47,8 +47,8 @@ function Main(props) {
             </section>
 
             <section className="elements-container">
-                {cards.map((card, id) => (
-                    <Card key={id} card={card} onCardClick={props.onCardClick} />
+                {cards.map((card, _id) => (
+                    <Card key={card._id} card={card} onCardClick={props.onCardClick} />
                 ))}
             </section>
         </main>

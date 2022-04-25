@@ -8,7 +8,7 @@ function ImagePopup(props) {
     }
 
     return (
-        <div className={`popup popup_modal ${props.card.isOpen ? 'popup_active' : ''}`} onClick={handleClosePopup}>
+        <div className={`popup popup_modal ${props.card.isOpen && 'popup_active'}`} onClick={handleClosePopup}>
             <div className="popup__modalWindow">
               <button className="popup__close-btn" type="button" aria-label="закрыть модальное окно" onClick={props.onClose}></button>
               <img className="popup__image-modal" src={props.card.link} alt={props.card.name} />
