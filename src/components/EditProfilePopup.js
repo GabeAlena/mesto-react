@@ -3,30 +3,24 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import PopupWithForm from './PopupwithForm';
 
 function EditProfilePopup(props) {
-    const [name, setName] = React.useState('');
-    const [description, setDescription] = React.useState('');
     const currentUser = React.useContext(CurrentUserContext);
+    const [userValues, setUserValues] = React.useState({})
 
     React.useEffect(() => {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
-    }, [currentUser]);
+        setUserValues(currentUser)
+    }, [currentUser, props.isOpen]);
 
-    function handleChangeName(e) {
-        setName(e.target.value);
-    }
-
-    function handleChangeDescription(e) {
-        setDescription(e.target.value);
+    const handleChange = (event) => { 
+      const { name, value } = event.target;
+      setUserValues((prev) => ({ 
+        ...prev, 
+         [name]: value
+      })) 
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-
-        props.onUpdateUser({
-            name,
-            about: description
-        });
+        props.onUpdateUser(userValues);
     }
 
     return (
@@ -48,10 +42,10 @@ function EditProfilePopup(props) {
                     id="name-input"
                     type="text" 
                     name="name"
-                    value={name || ''}
-                    onChange={handleChangeName}
+                    value={userValues.name || ''}
+                    onChange={handleChange}
                 />
-                <span className="name-input-error popup__input-error">Вы пропустили это поле.</span>
+                <span className="name-input-error popup__input-error"></span>
                 <input
                     className="popup__input popup__input_type_job"
                     placeholder="Профессиональная деятельность"
@@ -60,11 +54,11 @@ function EditProfilePopup(props) {
                     maxLength="200"
                     id="job-input"
                     type="text" 
-                    name="job"
-                    value={description || ''}
-                    onChange={handleChangeDescription}
+                    name="about"
+                    value={userValues.about || ''}
+                    onChange={handleChange}
                 />
-                <span className="job-input-error popup__input-error">Вы пропустили это поле.</span>
+                <span className="job-input-error popup__input-error"></span>
             </fieldset>
         </PopupWithForm>
     )

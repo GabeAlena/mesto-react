@@ -5,8 +5,10 @@ function EditAvatarPopup(props) {
     const avatarRef = React.useRef();
 
     React.useEffect(() => {
-        avatarRef.current.value = '';
-    });
+        if (props.isOpen) {
+            avatarRef.current.value = '';
+        }
+    }, [props.isOpen]);
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -35,7 +37,7 @@ function EditAvatarPopup(props) {
                     name="avatar"
                     ref={avatarRef}
                 />
-                <span className="avatar-input-error popup__input-error">Введите ссылку на аватар.</span>
+                <span className="avatar-input-error popup__input-error"></span>
             </fieldset>
         </PopupWithForm>
     )

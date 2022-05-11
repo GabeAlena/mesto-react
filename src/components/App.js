@@ -1,6 +1,5 @@
 import React from 'react';
 import { api } from '../utils/api.js';
-import '../index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -118,7 +117,6 @@ function App() {
 
     return (
       <CurrentUserContext.Provider value={currentUser}>
-        <>
           <Header />
           <Main 
               onEditAvatar={handleEditAvatarClick} 
@@ -159,7 +157,6 @@ function App() {
               title="Вы уверены?" 
               textButton="Да"
           />
-        </>          
       </CurrentUserContext.Provider>
     );
 }    

@@ -2,20 +2,28 @@ import React from 'react';
 import PopupWithForm from './PopupwithForm';
 
 function AddPlacePopup(props) {
-    const nameRef = React.useRef();
-    const linkRef = React.useRef();
+    const [card, setCard] = React.useState({})
 
     React.useEffect(() => {
-        nameRef.current.value = '';
-        linkRef.current.value = '';
-    });
+        if (props.isOpen) {
+            card.name = '';
+            card.link ='';
+        }
+    }, [props.isOpen]);
+
+    const handleChange = (event) => { 
+      const { name, value } = event.target;
+      setCard((card) => ({ 
+        ...card, 
+         [name]: value
+      })) 
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-
         props.onAddPlace({
-            name: nameRef.current.value,
-            link: linkRef.current.value
+            name: card.name,
+            link: card.link
         });
     }
 
@@ -38,19 +46,21 @@ function AddPlacePopup(props) {
                     type="text" 
                     placeholder="Название"
                     name="name"
-                    ref={nameRef}
+                    value={card.name || ''}
+                    onChange={handleChange}
                 />
-                <span className="mesto-input-error popup__input-error">Вы пропустили это поле.</span>
+                <span className="mesto-input-error popup__input-error"></span>
                 <input
-                    className="popup__input popup__input_type_image"
+                    className="popup__input popup__input_type_link"
                     required
                     type="url"
                     id="url-input"
                     placeholder="Ссылка на картинку" 
-                    name="image"
-                    ref={linkRef}
+                    name="link"
+                    value={card.link || ''}
+                    onChange={handleChange}
                 />
-                <span className="job-input-error popup__input-error">Вы пропустили это поле.</span>
+                <span className="job-input-error popup__input-error"></span>
             </fieldset>
         </PopupWithForm>
     )
